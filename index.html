@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ReWaste | Smart Household Waste Recovery</title>
+<style>
+:root{
+  --green:#167a52; --green2:#20a66a; --mint:#e9f8f0; --dark:#123128;
+  --text:#334740; --white:#fff; --orange:#f59e0b; --red:#dc5a5a;
+  --shadow:0 12px 35px rgba(18,49,40,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--text);background:#f8fbf9;line-height:1.6}
+nav{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);
+display:flex;justify-content:space-between;align-items:center;padding:15px 7%;box-shadow:0 2px 18px #12312810}
+.logo{font-size:1.35rem;font-weight:800;color:var(--green)} .logo span{color:var(--dark)}
+nav a{text-decoration:none;color:var(--text);margin-left:25px;font-weight:600;font-size:.93rem}
+nav a:hover{color:var(--green)}
+.hero{padding:75px 7% 70px;background:linear-gradient(135deg,#e9f8f0 0%,#f8fbf9 55%,#eaf6ff 100%);
+display:grid;grid-template-columns:1.1fr .9fr;gap:50px;align-items:center}
+.badge{display:inline-block;background:#d8f2e4;color:var(--green);padding:7px 13px;border-radius:30px;font-weight:700;font-size:.82rem;margin-bottom:18px}
+h1{font-size:clamp(2.4rem,5vw,4.5rem);line-height:1.05;color:var(--dark);letter-spacing:-2px}
+.hero h1 span{color:var(--green)}
+.hero p{font-size:1.1rem;margin:22px 0;color:#52645e;max-width:650px}
+.btn{display:inline-block;padding:13px 21px;border-radius:10px;text-decoration:none;font-weight:750;margin-right:8px}
+.primary{background:var(--green);color:white}.secondary{background:white;color:var(--green);border:1px solid #b9dcc9}
+.hero-card{background:white;border-radius:24px;padding:28px;box-shadow:var(--shadow)}
+.waste-bin{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
+.bin{padding:20px;border-radius:16px;color:white;min-height:120px}
+.bin h3{font-size:1.05rem}.bin p{font-size:.86rem;margin-top:7px;opacity:.92}
+.greenbin{background:#279e68}.bluebin{background:#377ac9}.brownbin{background:#a76b3f}.redbin{background:#d45b5b}
+section{padding:70px 7%}.section-head{text-align:center;max-width:760px;margin:0 auto 38px}
+.section-head h2{font-size:2.25rem;color:var(--dark);margin-bottom:10px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{background:white;padding:25px;border-radius:18px;box-shadow:var(--shadow);border:1px solid #edf2ef}
+.icon{font-size:2rem;margin-bottom:10px}.card h3{color:var(--dark);margin-bottom:8px}
+.solution{background:var(--dark);color:white}.solution .section-head h2{color:white}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.step{background:#193f34;padding:23px;border-radius:16px;border:1px solid #2b594b}
+.num{width:34px;height:34px;border-radius:50%;background:#3ac17c;display:grid;place-items:center;color:#073622;font-weight:900;margin-bottom:13px}
+.tracker{background:linear-gradient(180deg,#f8fbf9,#e9f8f0)}
+.dashboard{display:grid;grid-template-columns:1fr 1fr;gap:25px}
+.panel{background:white;border-radius:18px;padding:27px;box-shadow:var(--shadow)}
+.progress{height:13px;background:#e6eee9;border-radius:20px;overflow:hidden;margin:13px 0 8px}
+.progress div{height:100%;background:var(--green);width:72%;border-radius:20px}
+.statrow{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}
+.stat{background:#f1f8f4;padding:15px;border-radius:12px;text-align:center}.stat b{display:block;font-size:1.45rem;color:var(--green)}
+select,input,button{font:inherit;width:100%;padding:11px 12px;border:1px solid #ccd9d2;border-radius:9px;margin-top:8px}
+button{background:var(--green);color:white;border:0;font-weight:750;cursor:pointer}
+#result{margin-top:14px;padding:12px;background:#edf8f2;border-radius:9px;display:none}
+.cta{text-align:center;background:#dff4e8}.cta h2{font-size:2.2rem;color:var(--dark);margin-bottom:10px}
+footer{background:#0e2921;color:#c6d8d1;padding:30px 7%;display:flex;justify-content:space-between;gap:20px}
+.small{font-size:.88rem;color:#82978f}
+@media(max-width:850px){.hero,.dashboard{grid-template-columns:1fr}.grid{grid-template-columns:1fr 1fr}.steps{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){nav a{display:none}.hero{padding-top:50px}.grid,.steps,.statrow{grid-template-columns:1fr}section{padding:55px 5%}h1{letter-spacing:-1px}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="logo">♻ <span>Re</span>Waste</div>
+  <div><a href="#problem">Problem</a><a href="#solution">Solution</a><a href="#tracker">Tracker</a><a href="#impact">Impact</a></div>
+</nav>
+
+<header class="hero">
+  <div>
+    <div class="badge">LPU PROJECT • SMART WASTE RECOVERY</div>
+    <h1>Turn household waste into <span>recoverable resources.</span></h1>
+    <p>ReWaste is a simple digital solution for poor household waste segregation. It helps citizens know what goes where, improves collection, and connects separated waste with recycling and recovery.</p>
+    <a class="btn primary" href="#solution">Explore the solution</a>
+    <a class="btn secondary" href="#tracker">Try the demo</a>
+  </div>
+  <div class="hero-card">
+    <h2 style="color:#123128">Know your waste</h2>
+    <p class="small">Segregate at source so valuable material doesn't get lost in mixed waste.</p>
+    <div class="waste-bin">
+      <div class="bin greenbin"><h3>🟢 Wet Waste</h3><p>Food scraps, vegetable peels, organic waste</p></div>
+      <div class="bin bluebin"><h3>🔵 Dry Waste</h3><p>Paper, cardboard, plastics, metals</p></div>
+      <div class="bin brownbin"><h3>🟤 Garden Waste</h3><p>Leaves, grass and other biodegradable material</p></div>
+      <div class="bin redbin"><h3>🔴 Special Waste</h3><p>E-waste, batteries and hazardous household items</p></div>
+    </div>
+  </div>
+</header>
+
+<section id="problem">
+ <div class="section-head"><h2>The problem</h2><p>When different types of household waste are thrown together, recyclable materials become contaminated and difficult or impossible to recover.</p></div>
+ <div class="grid">
+  <div class="card"><div class="icon">🗑️</div><h3>Mixed at source</h3><p>Residents often put wet, dry and special waste into the same bag because segregation is inconvenient or confusing.</p></div>
+  <div class="card"><div class="icon">🔄</div><h3>Recovery is lost</h3><p>Paper, plastic, metal and other valuable materials can become contaminated by food and moisture.</p></div>
+  <div class="card"><div class="icon">🌍</div><h3>Environmental cost</h3><p>More mixed waste reaches dumpsites, increasing pollution while useful resources are wasted.</p></div>
+ </div>
+</section>
+
+<section id="solution" class="solution">
+ <div class="section-head"><h2>A practical digital solution</h2><p>ReWaste combines education, simple classification and collection support into one platform.</p></div>
+ <div class="steps">
+  <div class="step"><div class="num">1</div><h3>Identify</h3><p>Search an item to understand which waste category it belongs to.</p></div>
+  <div class="step"><div class="num">2</div><h3>Segregate</h3><p>Put waste into the correct household bin before contamination occurs.</p></div>
+  <div class="step"><div class="num">3</div><h3>Collect</h3><p>Keep separated waste ready for scheduled collection or a recovery centre.</p></div>
+  <div class="step"><div class="num">4</div><h3>Recover</h3><p>Recyclable materials can enter recycling/recovery streams instead of being lost.</p></div>
+ </div>
+</section>
+
+<section id="tracker" class="tracker">
+ <div class="section-head"><h2>Waste Sorting Assistant</h2><p>Type a household item and the demo will recommend its category.</p></div>
+ <div class="dashboard">
+  <div class="panel">
+   <h3 style="color:#123128">🔎 Where does my waste go?</h3>
+   <input id="item" placeholder="Example: plastic bottle, banana peel..." onkeydown="if(event.key==='Enter')sortWaste()">
+   <button onclick="sortWaste()">Check category</button>
+   <div id="result"></div>
+  </div>
+  <div class="panel">
+   <h3 style="color:#123128">🏠 Household segregation score</h3>
+   <p class="small">Demo dashboard — replace with real user/collection data in the final application.</p>
+   <div class="progress"><div></div></div>
+   <b>72% segregation goal</b>
+   <div class="statrow">
+    <div class="stat"><b>12 kg</b>Dry recovered</div>
+    <div class="stat"><b>8 kg</b>Wet diverted</div>
+    <div class="stat"><b>5</b>Days active</div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section id="impact">
+ <div class="section-head"><h2>What the platform can enable</h2><p>The project can be scaled from a student prototype into a city-level waste recovery system.</p></div>
+ <div class="grid">
+  <div class="card"><div class="icon">📊</div><h3>Collection analytics</h3><p>Track how much wet, dry and special waste is being collected separately.</p></div>
+  <div class="card"><div class="icon">🎁</div><h3>Citizen rewards</h3><p>Give points or recognition for consistent segregation and responsible disposal.</p></div>
+  <div class="card"><div class="icon">🏭</div><h3>Recovery network</h3><p>Connect dry waste to recyclers, material recovery facilities and authorised handlers.</p></div>
+ </div>
+</section>
+
+<section class="cta">
+ <h2>Small segregation. Bigger recovery.</h2>
+ <p>Start at home. Separate before collection. Recover what can be recovered.</p>
+ <br><a class="btn primary" href="#tracker">Try Waste Sorting</a>
+</section>
+
+<footer>
+ <div><b>ReWaste</b><br><span class="small">Smart Household Waste Recovery • LPU Project</span></div>
+ <div class="small">Prototype website for academic demonstration</div>
+</footer>
+
+<script>
+const categories = {
+ "banana":"Wet Waste","peel":"Wet Waste","food":"Wet Waste","vegetable":"Wet Waste","fruit":"Wet Waste",
+ "paper":"Dry Waste","cardboard":"Dry Waste","plastic":"Dry Waste","bottle":"Dry Waste","metal":"Dry Waste","can":"Dry Waste","glass":"Dry Waste",
+ "leaf":"Garden Waste","leaves":"Garden Waste","grass":"Garden Waste",
+ "battery":"Special Waste","batteries":"Special Waste","mobile":"E-Waste / Special Waste","charger":"E-Waste / Special Waste","laptop":"E-Waste / Special Waste","bulb":"Special Waste"
+};
+function sortWaste(){
+ const value=document.getElementById("item").value.trim().toLowerCase();
+ const result=document.getElementById("result");
+ if(!value){result.style.display="block";result.innerHTML="Please enter an item first.";return;}
+ let found="Not sure — check your local municipal disposal rules.";
+ for(const key in categories){if(value.includes(key)){found=categories[key];break;}}
+ result.style.display="block";
+ result.innerHTML="<b>Recommended category:</b> "+found+
+   "<br><span class='small'>Demo guidance. Local collection rules may vary.</span>";
+}
+</script>
+</body>
+</html>
